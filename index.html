@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/datepicker.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+
+    <body>
+      <div class="inner-layer">
+          <div class="container">
+            <div class="row no-margin">
+                <div class="col-sm-7">
+                    <div class="content">
+                        <h1>Book You Slot Now and Save your time</h1>
+                        <p> </p>
+                        <h2>For Help Call : +91 89-123-453</h2>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-data">
+                      <form action="/pop.html" autocomplete="off" id="form">
+
+                        <div class="form-head">
+                            <h2>Book Appointemnt</h2>
+                        </div>
+                        <div class="form-body">
+                            <div class="row form-row">
+                              <input id="name" type="text" placeholder="Enter Full name" class="form-control" name="Name">
+                            </div>
+                            <div class="row form-row">
+                              <input id="mobile" type="text" placeholder="Enter Mobile Number" class="form-control" name="mobile">
+                            </div>
+                             <div class="row form-row">
+                              <input id="email" type="text" placeholder="Enter Email Adreess" class="form-control" name="email">
+                            </div>
+                           <div class="row form-row">
+                              <input id="dat" type="text" placeholder="Appointment Date" class="form-control" name="date">
+                            </div>
+                            <div class="row form-row">
+                              <select id="slot" value="Time Slot" class="form-control" name="slot">
+                                <option value="select">Time Slot</option>
+                                <option value="8:00 - 10:00">8:00 - 10:00</option>
+                                <option value="10:00 - 12:00">10:00 - 12:00</option>
+                                <option value="12:00 - 14:00">12:00 - 14:00</option>
+                                <option value="14:00 - 16:00">14:00 - 16:00</option>
+                              </select>
+                            </div>
+                            
+                            <h6>Address Details</h6>
+
+                             <div class="row form-row">
+                                <div class="col-sm-6">
+                                   <input type="text" placeholder="Enter Area" class="form-control" >
+                                </div>
+                                <div class="col-sm-6">
+                                   <input type="text" placeholder="Enter City" class="form-control">
+                                </div>
+                            </div>
+                             <div class="row form-row">
+                                <div class="col-sm-6">
+                                   <input type="text" placeholder="Enter State" class="form-control">
+                                </div>
+                                <div class="col-sm-6">
+                                   <input type="text" placeholder="Postal Code" class="form-control">
+                                </div>
+                            </div>
+
+                             <div class="row form-row">
+                               <input onclick="myfunction()" type="submit" value="Book apointment" class="btn btn-success btn-appointment" />
+                               
+                            </div>
+
+                        </div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      
+    </body>
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap-datepicker.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          $("#dat").datepicker();
+      })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase-app.min.js"></script>
+    <script src = "https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCcqLbdZSF1yv5B05hNYSb3Yr4A6qSn7U8",
+        authDomain: "needforcode-2e873.firebaseapp.com",
+        databaseURL: "https://needforcode-2e873-default-rtdb.firebaseio.com",
+        projectId: "needforcode-2e873",
+        storageBucket: "needforcode-2e873.appspot.com",
+        messagingSenderId: "255055974443",
+        appId: "1:255055974443:web:86ed4ce25e02db3ef2da6e",
+        measurementId: "G-SVB6TF8DRH"
+      };
+    
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+  
+
+      var infoRef = firebase.database().ref("info");
+
+  document.getElementById("form").addEventListener('submit', submitForm);
+
+  function submitForm(e) {
+    e.preventDefault();
+
+    var Name = getInputVal('name');
+    var mobile = getInputVal('mobile');
+    var email = getInputVal('email');
+    var date = getInputVal('dat');
+
+    saveInfo(Name, mobile, email, date);
+
+    document.getElementById('form').reset();
+  }
+
+  function getInputVal(id) {
+    return document.getElementById(id).value;
+  }
+
+  function saveInfo(Name, mobile, email, date) {
+    var newInfoRef = infoRef.push();
+    newInfoRef.set({
+        Name: Name,
+        mobile: mobile,
+        email: email,
+        date : date
+    });
+  }
+    </script>
+    <script>
+      function myfunction(){
+        alert('Submitted Successfully');
+      }
+    </script>
+    
+  </body>
+</html>
